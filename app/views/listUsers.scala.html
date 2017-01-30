@@ -1,0 +1,28 @@
+@(users: Seq[UserData], form: Form[UserData])(implicit messages: play.api.i18n.Messages)
+
+@main("Users") {
+
+    <h1>Users</h1>
+    <table>
+        <thead>
+            <tr><th>FirstName</th><th>LastName</th>
+        </thead>
+        <tbody>
+        @for(u <- users) {
+            <tr><td>@u.firstName</td><td>@u.lastName</td></tr>
+        }
+        </tbody>
+    </table>
+
+    <hr/>
+
+
+    @helper.form(routes.UserDataFormController.createUser) {
+        <h2>Users Form Fields</h2>
+        @helper.inputText(form("firstName"))
+        @helper.inputText(form("lastName"))
+        <button type="submit">Create user</button>
+    }
+
+
+}
