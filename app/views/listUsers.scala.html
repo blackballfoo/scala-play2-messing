@@ -1,4 +1,4 @@
-@(users: Seq[UserData], form: Form[UserData])(implicit messages: play.api.i18n.Messages)
+@(users: Seq[UserData])(implicit messages: play.api.i18n.Messages)
 
 @main("Users") {
 
@@ -15,14 +15,5 @@
     </table>
 
     <hr/>
-
-
-    @helper.form(routes.UserDataFormController.createUser) {
-        <h2>Users Form Fields</h2>
-        @helper.inputText(form("firstName"))
-        @helper.inputText(form("lastName"))
-        <button type="submit">Create user</button>
-    }
-
 
 }

@@ -28,11 +28,17 @@ class UserDataFormController @Inject()(val messagesApi: DefaultMessagesApi)  ext
 
  def listUsers = Action { implicit request =>
     // Pass an unpopulated form to the template
-    Ok(views.html.listUsers(users.toSeq, UserDataFormController.createUserDataForm))
+    Ok(views.html.listUsers(users.toSeq))
   }
 
-  def createUser = Action(parse.form(UserDataFormController.createUserDataForm)) { request =>
+  def createUser = Action{ implicit request =>
+    // Pass an unpopulated form to the template
+    Ok(views.html.createUser(UserDataFormController.createUserDataForm))
+  }
+
+  def newUser = Action(parse.form(UserDataFormController.createUserDataForm)) { request =>
     val user = request.body
+    println("new User created")
     users.append(user)
     Redirect(routes.UserDataFormController.listUsers)
   }
