@@ -10,6 +10,7 @@ import play.api.data.Forms._
 import play.api.data.format.Formats._
 import play.api.i18n.{DefaultMessagesApi, I18nSupport}
 import play.i18n.MessagesApi
+import services.UserService
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -18,17 +19,12 @@ import scala.collection.mutable.ArrayBuffer
   * Created by blackballfoo on 30/01/2017.
   */
 @Singleton
-class UserDataFormController @Inject()(val messagesApi: DefaultMessagesApi)  extends Controller with I18nSupport {
+class UserDataFormController @Inject()(val messagesApi: DefaultMessagesApi, val userService : UserService)  extends Controller with I18nSupport {
 
-  private val users = ArrayBuffer(
-    UserData("Fred", "FlintStone"),
-    UserData("Wilma", "FlintStone"),
-    UserData("Tony", "Stark")
-  )
 
  def listUsers = Action { implicit request =>
     // Pass an unpopulated form to the template
-    Ok(views.html.listUsers(users.toSeq))
+    Ok(views.html.listUsers(userService.getUsers))
   }
 
   def createUser = Action{ implicit request =>
@@ -39,7 +35,7 @@ class UserDataFormController @Inject()(val messagesApi: DefaultMessagesApi)  ext
   def newUser = Action(parse.form(UserDataFormController.createUserDataForm)) { request =>
     val user = request.body
     println("new User created")
-    users.append(user)
+    userService.addUser(user)
     Redirect(routes.UserDataFormController.listUsers)
   }
 
