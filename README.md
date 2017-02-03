@@ -42,3 +42,7 @@ https://www.theguardian.com/info/developer-blog/2015/dec/30/how-to-add-a-form-to
 Latest play docs 
 https://www.playframework.com/documentation/2.5.x/ScalaForms
 
+
+
+// routing http://stackoverflow.com/questions/15864957/dynamic-routes-on-play-framework-2-1-templates
+https://dzone.com/refcardz/getting-started-play-framework
