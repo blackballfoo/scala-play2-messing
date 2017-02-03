@@ -2,9 +2,19 @@
 
 @main("Users") {
 
+
     <h1> Create New User</h1>
     <hr/>
-    @helper.form(routes.UserDataFormController.newUser) {
+
+    @if(form.hasGlobalErrors) {
+        <ul>
+        @for(error <- form.globalErrors) {
+            <li>@Messages(error.messages, error.args)</li>
+        }
+        </ul>
+    }
+
+    @helper.form(routes.UserDataFormController.handleUserFormPost) {
         <h2>Users Form Fields</h2>
         @helper.inputText(form("firstName"))
         @helper.inputText(form("lastName"))

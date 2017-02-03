@@ -44,7 +44,7 @@ class ApplicationSpec extends PlaySpec with OneAppPerTest {
 
     "redirect to users path on a POST to /user path" in {
       route(app, FakeRequest(POST, "/user")
-        .withFormUrlEncodedBody(("firstName","Bobby"),("lastName","Brown"))).map(status(_)) mustBe Some(SEE_OTHER)
+        .withFormUrlEncodedBody(("firstName","bob"),("lastName","Brown"))).map(status(_)) mustBe Some(SEE_OTHER)
       route(app, FakeRequest(POST, "/user")
         .withFormUrlEncodedBody(("firstName","Bobby"),("lastName","Brown")))
         .map(headers(_)) mustBe Some(Map("Location"-> "/users"))

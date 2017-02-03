@@ -1,18 +1,14 @@
 package controllers
 
+import java.util.regex.Pattern
 import javax.inject.{Inject, Singleton}
 
-import play.api._
-import play.api.mvc._
 import models.UserData
 import play.api.data.Form
 import play.api.data.Forms._
-import play.api.data.format.Formats._
 import play.api.i18n.{DefaultMessagesApi, I18nSupport}
-import play.i18n.MessagesApi
+import play.api.mvc._
 import services.UserService
-
-import scala.collection.mutable.ArrayBuffer
 
 
 /**
@@ -23,7 +19,6 @@ class UserDataFormController @Inject()(val messagesApi: DefaultMessagesApi, val 
 
 
  def listUsers = Action { implicit request =>
-    // Pass an unpopulated form to the template
     Ok(views.html.listUsers(userService.getUsers))
   }
 
@@ -32,7 +27,8 @@ class UserDataFormController @Inject()(val messagesApi: DefaultMessagesApi, val 
     Ok(views.html.createUser(UserDataFormController.createUserDataForm))
   }
 
-  def newUser = Action(parse.form(UserDataFormController.createUserDataForm)) { request =>
+  def handleUserFormPost = Action(parse.form(UserDataFormController.createUserDataForm,
+    onErrors = (formWithErrors: Form[UserData]) => BadRequest(views.html.createUser(formWithErrors)))) { request =>
     val user = request.body
     println("new User created")
     userService.addUser(user)
@@ -45,8 +41,22 @@ class UserDataFormController @Inject()(val messagesApi: DefaultMessagesApi, val 
 object UserDataFormController {
    val createUserDataForm = Form(
        mapping(
-         "firstName" -> text,
-         "lastName" -> text
-       )(UserData.apply)(UserData.unapply)
+         "firstName" -> nonEmptyText,
+         "lastName" -> nonEmptyText
+       )(UserData.apply)(UserData.unapply) verifying("Failed form constraints!", fields => fields match {
+         case userData => validate(userData)
+       })
      )
+
+  def validate( userData: UserData ) = {
+    val p  = Pattern.compile("[a-zA-Z]");
+    userData match {
+      case UserData( firstName ,lastName ) =>
+        (p.matcher(firstName).find() && p.matcher(lastName).find())
+      case _ =>
+        false
+    }
+  }
 }
+
+
