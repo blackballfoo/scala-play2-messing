@@ -1,6 +1,6 @@
 package controllers
 
-import java.util.regex.Pattern
+import java.util.UUID
 import javax.inject.{Inject, Singleton}
 
 import models.UserData
@@ -24,15 +24,18 @@ class UserDataFormController @Inject()(val messagesApi: DefaultMessagesApi, val 
 
   def createUser = Action{ implicit request =>
     // Pass an unpopulated form to the template
+    val userData
     Ok(views.html.createUser(UserDataFormController.createUserDataForm))
   }
 
   def handleUserFormPost = Action(parse.form(UserDataFormController.createUserDataForm,
     onErrors = (formWithErrors: Form[UserData]) => BadRequest(views.html.createUser(formWithErrors)))) { request =>
+    request.session("")
     val user = request.body
     println("new User created")
     userService.addUser(user)
-    Redirect(routes.UserDataFormController.listUsers)
+    val userId = UUID.randomUUID();
+    Redirect(routes.UserDataFormController.listUsers).withSession("user"->userId.toString)
   }
 
 
@@ -41,22 +44,10 @@ class UserDataFormController @Inject()(val messagesApi: DefaultMessagesApi, val 
 object UserDataFormController {
    val createUserDataForm = Form(
        mapping(
-         "firstName" -> nonEmptyText,
-         "lastName" -> nonEmptyText
-       )(UserData.apply)(UserData.unapply) verifying("Failed form constraints!", fields => fields match {
-         case userData => validate(userData)
-       })
+         "firstName" -> text.verifying("Enter First Name", {!_.isEmpty}),
+         "lastName" -> text.verifying("Enter Last Name", {!_.isEmpty})
+       )(UserData.apply)(UserData.unapply)
      )
-
-  def validate( userData: UserData ) = {
-    val p  = Pattern.compile("[a-zA-Z]");
-    userData match {
-      case UserData( firstName ,lastName ) =>
-        (p.matcher(firstName).find() && p.matcher(lastName).find())
-      case _ =>
-        false
-    }
-  }
 }
 
 
