@@ -46,3 +46,23 @@ https://www.playframework.com/documentation/2.5.x/ScalaForms
 
 // routing http://stackoverflow.com/questions/15864957/dynamic-routes-on-play-framework-2-1-templates
 https://dzone.com/refcardz/getting-started-play-framework
+
+### Uses Scoverage - https://github.com/scoverage/sbt-scoverage/
+
+Run the tests with enabled coverage:
+```
+$ sbt clean coverage test
+```
+or if you have integration tests as well
+```
+$ sbt clean coverage it:test
+```
+
+To enable coverage directly in your build, use:
+```
+coverageEnabled := true
+```
+
+To generate the coverage reports run
+```
+$ sbt coverageReport

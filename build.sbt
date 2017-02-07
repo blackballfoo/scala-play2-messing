@@ -16,4 +16,8 @@ libraryDependencies ++= Seq(
 
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
 
+coverageExcludedPackages := """controllers\..*Reverse.*;router.Routes.*;"""
+
+coverageEnabled := true
+
 
