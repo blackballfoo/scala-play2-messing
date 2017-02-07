@@ -1,0 +1,13 @@
+#User Data Form content elements
+user.data.page.title=User Data
+user.data.form.heading=Create New User
+
+user.list.page.title=Users
+user.list.page.heading=Users
+
+user.list.page.firstname.column.heading=First Name
+user.list.page.lastname.column.heading=Last Name
+
+#User Data Form errors
+user.data.form-error.first-name=Enter your first name in full
+user.data.form-error.last-name=Enter your last name in full

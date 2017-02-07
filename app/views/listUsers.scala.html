@@ -1,19 +1,23 @@
+@import domain.UserData
 @(users: Seq[UserData])(implicit messages: play.api.i18n.Messages)
 
-@main("Users") {
+@main(Messages("user.list.page.heading")) {
 
-    <h1>Users</h1>
-    <table>
-        <thead>
-            <tr><th>FirstName</th><th>LastName</th>
-        </thead>
-        <tbody>
-        @for(u <- users) {
-            <tr><td>@u.firstName</td><td>@u.lastName</td></tr>
-        }
-        </tbody>
-    </table>
-
+    <h1>@Messages("user.list.page.title")</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr><th>@Messages("user.list.page.firstname.column.heading")</th>
+                    <th>@Messages("user.list.page.lastname.column.heading")</th>
+            </thead>
+            <tbody>
+            @for(u <- users) {
+                <tr><td>@u.firstName</td><td>@u.lastName</td></tr>
+            }
+                <tr><td colspan="2"><a href="@controllers.routes.UserDataFormController.createForm()">Back</a></td></tr>
+            </tbody>
+        </table>
+    </div>
     <hr/>
 
 }

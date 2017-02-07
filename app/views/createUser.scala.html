@@ -1,14 +1,16 @@
-@(form: Form[UserData])(implicit messages: play.api.i18n.Messages)
+@import forms.model.UserDataCreateViewModel
+@(userForm: Form[UserDataCreateViewModel])(implicit messages: play.api.i18n.Messages)
 
-@main("Users") {
+
+@main(Messages("user.data.page.title")) {
 
 
-    <h1> Create New User</h1>
+    <h1>@Messages("user.data.form.heading")</h1>
     <hr/>
 
-    @if(form.hasGlobalErrors) {
+    @if(userForm.hasGlobalErrors) {
         <ul>
-        @for(error <- form.globalErrors) {
+        @for(error <- userForm.globalErrors) {
             <li>@Messages(error.messages, error.args)</li>
         }
         </ul>
@@ -16,8 +18,10 @@
 
     @helper.form(routes.UserDataFormController.handleUserFormPost) {
         <h2>Users Form Fields</h2>
-        @helper.inputText(form("firstName"))
-        @helper.inputText(form("lastName"))
+        @helper.inputText(userForm("firstName"),
+                            '_label -> "First Name")
+        @helper.inputText(userForm("lastName"),
+                            '_label -> "Last Name")
         <button type="submit">Create user</button>
     }
 

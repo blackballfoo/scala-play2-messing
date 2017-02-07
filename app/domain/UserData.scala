@@ -1,4 +1,4 @@
-package models
+package domain
 
 /**
   * Created by blackballfoo on 30/01/2017.

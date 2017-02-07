@@ -1,7 +1,7 @@
 package services
 
 import com.google.inject.ImplementedBy
-import models.UserData
+import domain.UserData
 
 import scala.collection.mutable.ArrayBuffer
 
@@ -16,7 +16,7 @@ trait UserService {
     UserData("Wilma", "FlintStone"),
     UserData("Tony", "Stark")
   )
-  
+
   def getUsers()= users
 
   def addUser(user: UserData): Unit = {

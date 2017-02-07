@@ -1,6 +1,6 @@
 package unit.service
 
-import models.UserData
+import domain.UserData
 import org.scalatest.FunSuite
 import services.UserServiceImpl
 

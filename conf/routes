@@ -5,8 +5,8 @@
 # An example controller showing a sample home page
 GET     /                            controllers.HomeController.index
 
-GET     /users                        controllers.UserDataFormController.listUsers
-GET     /user                      controllers.UserDataFormController.createUser
+GET     /users                     controllers.UserDataFormController.listUsers
+GET     /user                      controllers.UserDataFormController.createForm
 POST    /user                      controllers.UserDataFormController.handleUserFormPost
 
 # Map static resources from the /public folder to the /assets URL path
