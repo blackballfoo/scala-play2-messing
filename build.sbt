@@ -1,9 +1,13 @@
+
 name := """play-scala"""
 
 version := "1.0-SNAPSHOT"
 
-lazy val root = (project in file(".")).enablePlugins(PlayScala)
-
+lazy val root = (project in file("."))
+  .enablePlugins(PlayScala)
+    .settings(
+      scoverageSettings
+    )
 scalaVersion := "2.11.8"
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
@@ -16,8 +20,18 @@ libraryDependencies ++= Seq(
 
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
 
-coverageExcludedPackages := """controllers\..*Reverse.*;router.Routes.*;"""
 
-coverageEnabled := true
+lazy val scoverageSettings = {
+  import scoverage.ScoverageKeys
+
+  Seq(
+    // Semicolon-separated list of regexs matching classes to exclude
+    ScoverageKeys.coverageExcludedPackages := "<empty>;Reverse.*;router/*;view.*;",
+    ScoverageKeys.coverageMinimum := 97,
+    ScoverageKeys.coverageFailOnMinimum := true,
+    ScoverageKeys.coverageHighlighting := true,
+    parallelExecution in Test := false
+  )
+}
 
 

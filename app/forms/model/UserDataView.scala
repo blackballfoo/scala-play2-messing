@@ -8,8 +8,3 @@ import domain.UserData
 case class UserDataCreateViewModel (firstName: String, lastName: String) {
   val userData = UserData(firstName, lastName)
 }
-
-//case class UserDataEditViewModel (firstName: String, lastName: String) {
-//  def this(ud: UserData) = this(ud.firstName, ud.lastName)
-//  val userData = UserData(firstName, lastName)
-//}

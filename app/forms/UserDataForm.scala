@@ -12,13 +12,6 @@ import play.api.data.validation.Constraints
 object UserDataForm {
   private val Length24 = 24
 
-//  def userDataEditForm(): Form[UserDataEditViewModel] = {
-//    Form(mapping(
-//        "firstName" -> text.verifying("user.data.form-error.first-name", s => s.length>0).verifying(Constraints.maxLength(Length24)),
-//        "lastName" -> text.verifying("user.data.form-error.last-name", s => s.length>0).verifying(Constraints.maxLength(Length24))
-//      )(UserDataEditViewModel.apply)(UserDataEditViewModel.unapply))
-//  }
-
   def userDataCreateForm(): Form[UserDataCreateViewModel] = {
     Form(mapping(
       "firstName" -> text.verifying("user.data.form-error.first-name", s => s.length>0).verifying(Constraints.maxLength(Length24)),
