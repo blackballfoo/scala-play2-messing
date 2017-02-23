@@ -1,5 +1,5 @@
 
-name := """play-scala"""
+name := """play-scala-user-data"""
 
 version := "1.0-SNAPSHOT"
 
@@ -9,6 +9,8 @@ lazy val root = (project in file("."))
       scoverageSettings
     )
 scalaVersion := "2.11.8"
+
+scalastyleConfig := baseDirectory.value / "project" / "scalastyle-config.xml"
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 // Resolver is needed only for SNAPSHOT versions
